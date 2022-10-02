@@ -1,0 +1,26 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "build": "mkdir -p dist && parcel build --dist-dir ./dist --log-level verbose --no-optimize --no-content-hash --no-source-maps",
+    "preview": "parcel"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "@types/canvas-confetti": "^1.4.3",
+    "@types/uuid": "^8.3.4",
+    "autoprefixer": "^10.4.12",
+    "canvas-confetti": "^1.5.1",
+    "dragula": "^3.7.3",
+    "lit-html": "^2.3.1",
+    "parcel": "^2.7.0",
+    "postcss": "^8.4.17",
+    "posthtml": "^0.16.6",
+    "posthtml-include": "^1.7.4",
+    "tailwindcss": "^3.1.8",
+    "uuid": "^9.0.0"
+  }
+}
