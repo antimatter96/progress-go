@@ -1,0 +1,36 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleName</key>
+		<string>Progress</string>
+		<key>CFBundleExecutable</key>
+		<string>Progress</string>
+		<key>CFBundleIdentifier</key>
+		<string>com.wails.progress</string>
+		<key>CFBundleVersion</key>
+		<string>1</string>
+		<key>CFBundleGetInfoString</key>
+		<string>none</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1</string>
+		<key>CFBundleIconFile</key>
+		<string>iconfile</string>
+		<key>LSMinimumSystemVersion</key>
+		<string>10.13.0</string>
+		<key>NSHighResolutionCapable</key>
+		<string>true</string>
+		<key>NSHumanReadableCopyright</key>
+		<string>2020</string>
+		<key>NSExceptionAllowsInsecureHTTPLoads</key>
+		<true/>
+		<key>NSIncludesSubdomains</key>
+		<true/>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
+	</dict>
+</plist>
