@@ -189,7 +189,7 @@ body {
 }
 
 .act-time-data {
-  @apply text-2xl font-extrabold;
+  @apply text-2xl font-semibold;
   @apply tracking-wider;
 }
 
@@ -204,7 +204,7 @@ body {
   @apply w-full;
   @apply flex-grow;
 
-  @apply text-sm font-extralight opacity-80;
+  @apply text-sm font-black opacity-80;
 
   @apply focus:outline-none;
 
@@ -294,7 +294,7 @@ body {
 }
 
 .rounded-button {
-  @apply w-auto p-2 my-2 text-base font-medium rounded-full;
+  @apply w-auto p-2 my-2 text-base font-semibold rounded-full;
 }
 
 /**/
