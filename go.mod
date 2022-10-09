@@ -1,8 +1,8 @@
-module changeme
+module progress
 
-go 1.17
+go 1.18
 
-require github.com/wailsapp/wails/v2 v2.0.0-rc.1.1
+require github.com/wailsapp/wails/v2 v2.0.0
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
@@ -29,4 +29,4 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 )
 
-// replace github.com/wailsapp/wails/v2 v2.0.0-rc.1.1 => /Users/arpit/go/pkg/mod/github.com/wailsapp/wails/v2@v2.0.0-rc.1.1
+// replace github.com/wailsapp/wails/v2 v2.0.0 => /Users/arpit/go/pkg/mod/github.com/wailsapp/wails/v2@v2.0.0

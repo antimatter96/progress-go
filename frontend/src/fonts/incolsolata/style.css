@@ -1,16 +1,16 @@
-@font-face {
+/* @font-face {
   font-family: "Inconsolata";
   src: url("./otf/Inconsolata-ExtraLight.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: "Inconsolata";
   src: url("./otf/Inconsolata-Light.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
-}
+} */
 
 @font-face {
   font-family: "Inconsolata";
@@ -19,12 +19,12 @@
   font-style: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Inconsolata";
   src: url("./otf/Inconsolata-Medium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
-}
+} */
 
 @font-face {
   font-family: "Inconsolata";
@@ -40,12 +40,12 @@
   font-style: normal;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Inconsolata";
   src: url("./otf/Inconsolata-ExtraBold.otf") format("opentype");
   font-weight: 800;
   font-style: normal;
-}
+} */
 
 @font-face {
   font-family: "Inconsolata";
