@@ -11,7 +11,7 @@ Plan your studies and keep track of your progress
 [![wakatime](https://wakatime.com/badge/user/506f4162-49f8-4991-bd39-1593613e4b36/project/642ea97f-853a-4707-aa56-f923cf2039e6.svg)](https://wakatime.com/badge/user/506f4162-49f8-4991-bd39-1593613e4b36/project/642ea97f-853a-4707-aa56-f923cf2039e6)
 
 Tools used :
-- Tauri 🚀⚡️
+- Wails 🚀⚡️
 - Lit
 - Tailwinds
 - parcel
@@ -20,21 +20,24 @@ Tools used :
 
 ```
 clone the repo
+
+go install github.com/wailsapp/wails/v2/cmd/wails@latest
+
+
+npm install
+
+cd frontend
+npm install
+
+
+
 ```
 
-Build the assets on your own [Skip this to use uploaded]
-```
-yarn
-
-cd src
-yarn
-yarn build or yarn dev
-```
 
 Build the app
 
 ```
-yarn tauri dev or yarn tauri build
+wails build
 ```
 
 ## Screenshot

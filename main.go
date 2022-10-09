@@ -59,8 +59,8 @@ func main() {
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  false,
 			About: &mac.AboutInfo{
-				Title:   "My Application",
-				Message: "© 2021 Me",
+				Title:   "Progress",
+				Message: "© github.com/antimatter96",
 				Icon:    icon,
 			},
 		},

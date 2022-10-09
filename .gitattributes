@@ -1,0 +1,8 @@
+build/** linguist-generated
+build/* linguist-generated
+
+frontend/wailsjs/** linguist-vendored
+frontend/wailsjs/* linguist-vendored
+
+frontend/src/fonts/** linguist-generated
+frontend/src/fonts/* linguist-generated

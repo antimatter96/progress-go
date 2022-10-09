@@ -5,8 +5,9 @@
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "http://localhost:1234",
+  "bundle_id": "com.antimatter96.utils.progress",
   "author": {
     "name": "Arpit Jain",
-    "email": "arpit.jain@mindtickle.com"
+    "email": "me.arpitjain09@gmail.com"
   }
 }
