@@ -5,6 +5,6 @@ export function ConfirmDelete():Promise<boolean>;
 
 export function GetJsonData():Promise<string>;
 
-export function SaveJsonData(arg1:string):Promise<Error>;
+export function SaveJsonData(arg1:string):Promise<void>;
 
 export function SetJsonData(arg1:string):Promise<void>;
