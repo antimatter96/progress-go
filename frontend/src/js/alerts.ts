@@ -1,5 +1,5 @@
 import { html, render } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
+import { classMap } from "lit-html/directives/class-map.js";
 
 
 const CSS = {

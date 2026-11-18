@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "source": "src/index.html",
+  "@parcel/resolver-default": {
+    "packageExports": true
+  },
   "scripts": {
     "dev": "parcel",
     "build": "mkdir -p dist && parcel build --dist-dir ./dist --log-level verbose --no-optimize --no-content-hash --no-source-maps",
@@ -11,17 +14,16 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.6.2",
     "canvas-confetti": "^1.9.4",
     "dragula": "^3.7.3",
-    "lit-html": "^2.3.1",
+    "lit-html": "^2.8.0",
     "parcel": "^2.16.4",
     "postcss": "^8.5.33",
-    "posthtml": "^0.16.6",
+    "posthtml": "^0.16.7",
     "posthtml-include": "^1.7.4",
     "tailwindcss": "^4.3.5",
-    "uuid": "^9.0.0"
+    "uuid": "^14.0.3"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.5"

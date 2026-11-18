@@ -1,5 +1,5 @@
 import { html } from 'lit-html';
-import { classMap } from 'lit-html/directives/class-map';
+import { classMap } from 'lit-html/directives/class-map.js';
 
 import { v4 as uuid } from "uuid";
 import { customConfirm } from './framework';
