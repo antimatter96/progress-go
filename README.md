@@ -15,7 +15,7 @@ Tools used :
 - Wails 🚀⚡️
 - Lit
 - Tailwinds
-- parcel
+- Vite
 
 ### Instructions
 
