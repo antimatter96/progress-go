@@ -3,3 +3,5 @@ build/bin
 build/windows
 frontend/dist
 vendor/
+
+.DS_Store

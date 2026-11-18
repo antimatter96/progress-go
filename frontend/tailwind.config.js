@@ -3,12 +3,19 @@ const plugin = require("tailwindcss/plugin");
 const forms = require("@tailwindcss/forms");
 
 module.exports = {
-  content: ["*.html", "**/*.html", "*.ts", "**/*.ts"],
+  content: [
+    "*.html",
+    "src/**/*.html",
+    "wails/**/*.html",
+    "*.ts",
+    "src/**/*.ts",
+    "wails/**/*.ts",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
+      transparent: "transparent",
+      current: "currentColor",
       blue: colors.blue,
       gray: colors.gray,
       red: colors.red,
@@ -35,6 +42,6 @@ module.exports = {
         });
       });
     }),
-    forms({ strategy: 'class' }),
+    forms({ strategy: "class" }),
   ],
 };
