@@ -1,8 +1,33 @@
-@import "../node_modules/dragula/dist/dragula.css";
-@import url("./fonts/incolsolata/style.css");
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import '../node_modules/dragula/dist/dragula.css' layer(base);
+@import './fonts/incolsolata/style.css' layer(base);
+@import 'tailwindcss' source("../src");
+
+@plugin "@tailwindcss/forms" {
+  strategy: class;
+}
+
+@theme {
+  --font-sans: "Inconsolata", sans-serif;
+  --font-serif: "Inconsolata", serif;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 body {
   @apply font-serif;
@@ -10,15 +35,15 @@ body {
   background-image: radial-gradient(circle, #fdfcfb 0%, #e2d1c3 100%);
 }
 
-.transparent-border {
+@utility transparent-border {
   border: 1px solid transparent !important;
 }
 
-.good-shadow {
+@utility good-shadow {
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.better-shadow {
+@utility better-shadow {
   @apply transparent-border;
   @apply good-shadow;
 }
@@ -122,7 +147,7 @@ body {
   @apply text-2xl text-center opacity-80;
   @apply font-normal;
 
-  @apply focus:outline-none;
+  @apply focus:outline-hidden;
 
   background-position: center;
   background-repeat: no-repeat;
@@ -154,7 +179,7 @@ body {
   animation: blub 0.75s linear 0ms forwards infinite;
 } */
 
-.better-button {
+@utility better-button {
   border-width: 1px !important;
   @apply better-shadow;
   @apply font-black;
@@ -202,11 +227,11 @@ body {
   @apply better-button;
 
   @apply w-full;
-  @apply flex-grow;
+  @apply grow;
 
   @apply text-sm font-black opacity-80;
 
-  @apply focus:outline-none;
+  @apply focus:outline-hidden;
 
   background-position: center;
   background-repeat: no-repeat;
@@ -286,7 +311,7 @@ body {
 }
 
 .basic-input {
-  @apply block w-full px-4 py-3 leading-tight text-gray-900 bg-white border border-gray-400 appearance-none focus:outline-none invalid:border-red-500 focus:border-gray-900;
+  @apply block w-full px-4 py-3 leading-tight text-gray-900 bg-white border border-gray-400 appearance-none focus:outline-hidden invalid:border-red-500 focus:border-gray-900;
 }
 
 .basic-label {
@@ -349,7 +374,7 @@ body {
   width: 5.5%;
   padding-top: 5.5%;
 
-  @apply focus:outline-none;
+  @apply focus:outline-hidden;
 
   background-position: center;
   background-repeat: no-repeat;
