@@ -2,6 +2,7 @@ import { AlertHandler } from "./alerts";
 import { FormHandler, formTemplate } from "./form";
 import { Week } from "./week";
 import { WeekManager } from "./week_manager";
+import { loadLocal } from "./framework";
 import { render } from 'lit-html';
 
 
@@ -126,17 +127,13 @@ class Main {
       this.wm.registerWeek(w8);
     }
 
-    if (window.go) {
+    const stored = await loadLocal();
 
-    } else {
+    if (stored === null) {
       trial();
-    }
-
-    if (window.go) {
+    } else {
       try {
-        let exists = await WeekManager.ensureFileExists();
-        console.log(exists);
-        this.wm.loadLocal();
+        this.wm.loadFrom(stored);
       } catch (error) {
         console.log(error);
         this.am.show("error", error, 1_000);

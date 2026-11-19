@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
-// frontend/ directory (Vite's root is src/, but wailsjs/ sits next to it)
+// frontend/ directory (Vite's root is src/, but bindings/ sits next to it)
 const frontendDir = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
@@ -14,6 +14,10 @@ export default defineConfig({
   },
   plugins: [tailwindcss()],
   server: {
+    // Vite 8 defaults to binding `localhost`, which on this machine is IPv6-only
+    // ([::1]). The Wails dev proxy dials 127.0.0.1 and would get a 502, so pin
+    // the dev server to IPv4.
+    host: '127.0.0.1',
     port: 1234,
     strictPort: true,
     fs: {

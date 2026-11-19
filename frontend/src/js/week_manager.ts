@@ -3,7 +3,7 @@ import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
 import dragula from "dragula";
 import confetti from "canvas-confetti"
-import { ensureFileExists, loadLocal, saveFile } from "./framework";
+import { saveFile } from "./framework";
 
 export class WeekManager {
 
@@ -141,20 +141,15 @@ export class WeekManager {
   }
 
   async saveFile() {
-    let confirmed = await saveFile(JSON.stringify(this.weeks, null, 2));
+    await saveFile(JSON.stringify(this.weeks, null, 2));
   }
 
-  async loadLocal() {
-    let text = await loadLocal()
+  loadFrom(text: string) {
     let weeks = JSON.parse(text);
     for (let i = weeks.length - 1; i > -1; i--) {
       console.log("week", weeks[i]);
 
       this.createNewWeek(weeks[i]);
     }
-  }
-
-  static async ensureFileExists() {
-    await ensureFileExists()
   }
 }
