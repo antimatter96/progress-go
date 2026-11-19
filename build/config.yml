@@ -1,0 +1,48 @@
+# Configuration used by `wails3` to generate the build assets and to run the
+# dev loop. After editing `info`, regenerate the plists with
+# `wails3 task common:update:build-assets` (this overwrites the generated
+# `build/darwin/Info*.plist` files).
+version: '3'
+
+info:
+  companyName: "Arpit Jain"
+  productName: "Progress"
+  productIdentifier: "com.antimatter96.utils.progress"
+  description: "Plan your studies and keep track of your progress"
+  copyright: "© github.com/antimatter96"
+  comments: "Study progress tracker"
+  version: "1"
+  # Matches the name of `build/appicon.icon` (without the extension). It is
+  # written to `CFBundleIconName` and only takes effect once the compiled
+  # `build/darwin/Assets.car` is committed (see Task 2A in tasks/plan.md).
+  cfBundleIconName: "appicon"
+
+# Dev mode configuration
+dev_mode:
+  root_path: .
+  log_level: warn
+  debounce: 1000
+  ignore:
+    dir:
+      - .git
+      - node_modules
+      - frontend
+      - bin
+    file:
+      - .DS_Store
+      - .gitignore
+      - .gitkeep
+      - "*_test.go"
+    watched_extension:
+      - "*.go"
+      - "*.js" # Only for JS/TS files included with the //wails:include directive.
+      - "*.ts" # The frontend directory is excluded entirely by the setting above.
+    git_ignore: true
+  executes:
+    - cmd: wails3 build DEV=true
+      type: blocking
+    - cmd: wails3 task common:dev:frontend
+      type: background
+    - cmd: wails3 task run
+      type: primary
+      exit_policy: shutdown

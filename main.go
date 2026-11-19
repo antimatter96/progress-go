@@ -2,71 +2,62 @@ package main
 
 import (
 	"embed"
+	"log"
+	"log/slog"
 
-	"github.com/wailsapp/wails/v2"
-	"github.com/wailsapp/wails/v2/pkg/logger"
-	"github.com/wailsapp/wails/v2/pkg/options"
-	"github.com/wailsapp/wails/v2/pkg/options/mac"
-	"github.com/wailsapp/wails/v2/pkg/options/windows"
+	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
-//go:embed frontend/dist
+//go:embed all:frontend/dist
 var assets embed.FS
 
 //go:embed build/appicon.png
 var icon []byte
 
 func main() {
-	// Create an instance of the app structure
-	app := NewApp()
+	progressApp := NewApp()
 
-	// Create application with options
-	err := wails.Run(&options.App{
-		Title:             "Progress",
-		Width:             960,
-		Height:            840,
-		MinWidth:          720,
-		MinHeight:         570,
-		DisableResize:     false,
-		Fullscreen:        false,
-		Frameless:         false,
-		StartHidden:       false,
-		HideWindowOnClose: false,
-		BackgroundColour:  &options.RGBA{R: 33, G: 37, B: 43, A: 255},
-		Assets:            assets,
-		LogLevel:          logger.DEBUG,
-		OnStartup:         app.startup,
-		OnDomReady:        app.domReady,
-		OnShutdown:        app.shutdown,
-		Bind: []interface{}{
-			app,
+	app := application.New(application.Options{
+		Name:        "Progress",
+		Description: "Plan your studies and keep track of your progress",
+		Icon:        icon,
+		LogLevel:    slog.LevelDebug,
+		Services: []application.Service{
+			application.NewService(progressApp),
 		},
-		Windows: &windows.Options{
-			WebviewIsTransparent: false,
-			WindowIsTranslucent:  false,
-			DisableWindowIcon:    false,
+		Assets: application.AssetOptions{
+			Handler: application.AssetFileServerFS(assets),
 		},
-		Mac: &mac.Options{
-			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: false,
-				HideTitle:                  false,
-				HideTitleBar:               false,
-				FullSizeContent:            false,
-				UseToolbar:                 false,
-				HideToolbarSeparator:       true,
-			},
-			Appearance:           mac.NSAppearanceNameVibrantLight,
-			WebviewIsTransparent: true,
-			WindowIsTranslucent:  false,
-			About: &mac.AboutInfo{
-				Title:   "Progress",
-				Message: "© github.com/antimatter96",
-				Icon:    icon,
-			},
+		Mac: application.MacOptions{
+			// Match v2: closing the window leaves the app running until the
+			// user quits it explicitly.
+			ApplicationShouldTerminateAfterLastWindowClosed: false,
 		},
 	})
 
-	if err != nil {
-		println("Error:", err)
+	app.Window.NewWithOptions(application.WebviewWindowOptions{
+		Title:     "Progress",
+		Width:     960,
+		Height:    840,
+		MinWidth:  720,
+		MinHeight: 570,
+		// #21252b; the page itself is opaque, this only avoids a white flash.
+		BackgroundColour: application.NewRGB(33, 37, 43),
+		URL:              "/",
+		Mac: application.MacWindow{
+			TitleBar: application.MacTitleBar{
+				AppearsTransparent:   false,
+				Hide:                 false,
+				HideTitle:            false,
+				FullSizeContent:      false,
+				UseToolbar:           false,
+				HideToolbarSeparator: true,
+			},
+			Appearance: application.NSAppearanceNameVibrantLight,
+		},
+	})
+
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
 	}
 }

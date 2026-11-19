@@ -1,6 +1,7 @@
 node_modules/
-build/bin
-build/windows
+bin/
+.wails/
+.task/
 frontend/dist
 vendor/
 

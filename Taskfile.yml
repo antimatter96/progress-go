@@ -1,0 +1,38 @@
+version: '3'
+
+vars:
+  APP_NAME: "progress"
+  BIN_DIR: "bin"
+  PACKAGE_MANAGER: '{{.PACKAGE_MANAGER | default "npm"}}'
+  VITE_PORT: '{{.WAILS_VITE_PORT | default 1234}}'
+  # Target OS for build/package/run. Defaults to the host OS.
+  GOOS: '{{.GOOS | default OS}}'
+
+includes:
+  common: ./build/Taskfile.yml
+  darwin: ./build/darwin/Taskfile.yml
+
+tasks:
+  build:
+    summary: Builds the application
+    desc: Builds the production binary into `bin/progress`.
+    cmds:
+      - task: "{{.GOOS}}:build"
+
+  package:
+    summary: Packages a production build of the application
+    desc: Builds and packages `bin/progress.app`.
+    cmds:
+      - task: "{{.GOOS}}:package"
+
+  run:
+    summary: Runs the application
+    desc: Rebuilds and runs the development `.app` bundle.
+    cmds:
+      - task: "{{.GOOS}}:run"
+
+  dev:
+    summary: Runs the application in development mode
+    desc: Starts Vite on port 1234 and runs the app with live reload.
+    cmds:
+      - wails3 dev -config ./build/config.yml -port {{.VITE_PORT}}

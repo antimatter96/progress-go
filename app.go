@@ -8,73 +8,60 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/wailsapp/wails/v2/pkg/logger"
-	"github.com/wailsapp/wails/v2/pkg/runtime"
+	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
-// App struct
+// App is the Go service exposed to the frontend. Wails generates the bindings
+// from its exported methods (see frontend/bindings/progress/).
 type App struct {
-	ctx context.Context
+	app *application.App
 
 	savedFileLocation string
 	jsonData          string
-
-	logger logger.Logger
 }
 
-// NewApp creates a new App application struct
+// NewApp creates a new App application struct.
 func NewApp() *App {
-	return &App{
-		logger: logger.NewDefaultLogger(),
-	}
+	return &App{}
 }
 
-// startup is called at application startup
-func (b *App) startup(ctx context.Context) {
-	// Perform your setup here
-	b.ctx = ctx
-
-	b.logger.Info("START startup")
+// ServiceStartup is called at application startup.
+func (b *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+	b.app = application.Get()
+	b.app.Logger.Info("START startup")
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		panic("can't fetch user home directory")
+		return fmt.Errorf("can't fetch user home directory: %w", err)
 	}
 
 	savedFileLocation := filepath.Join(homeDir, "wail_progress", "data.json")
 	data, err := os.ReadFile(savedFileLocation)
 
 	if err != nil {
-		newError := errors.Unwrap(err)
-		fmt.Println(newError)
 		if errors.Is(err, syscall.ENOENT) {
-			err := os.Mkdir(filepath.Join(homeDir, "wail_progress"), 0755)
+			err = os.MkdirAll(filepath.Dir(savedFileLocation), 0755)
 			if err != nil {
-				panic(err)
+				return err
 			}
 
 			err = os.WriteFile(savedFileLocation, []byte("{}"), 0666)
 			if err != nil {
-				panic(err)
+				return err
 			}
 			data = []byte("{}")
 		} else {
-			fmt.Printf("%v->\n", err)
-			panic(err)
+			return err
 		}
 	}
 	b.savedFileLocation = savedFileLocation
 	b.SetJsonData(string(data))
+	return nil
 }
 
-// domReady is called after the front-end dom has been loaded
-func (b *App) domReady(ctx context.Context) {
-	// Add your action here
-}
-
-// shutdown is called at application termination
-func (b *App) shutdown(ctx context.Context) {
-	b.save()
+// ServiceShutdown is called at application termination.
+func (b *App) ServiceShutdown() error {
+	return b.save()
 }
 
 func (b *App) SetJsonData(jsonData string) {
@@ -91,6 +78,9 @@ func (b *App) SaveJsonData(jsonData string) error {
 }
 
 func (b *App) save() error {
+	if b.savedFileLocation == "" {
+		return nil
+	}
 	err := os.WriteFile(b.savedFileLocation, []byte(b.jsonData), 0666)
 	if err != nil {
 		return err
@@ -98,18 +88,25 @@ func (b *App) save() error {
 	return nil
 }
 
+// ConfirmDelete shows a native question dialog and blocks until the user picks
+// a button. v3 dialogs are callback based, so the result is passed back over a
+// channel; the caller runs on a binding goroutine, not the UI thread.
 func (b *App) ConfirmDelete() bool {
-	selection, err := runtime.MessageDialog(b.ctx, runtime.MessageDialogOptions{
-		Title:         "Do you really want to delete?",
-		Message:       "Confirm",
-		Buttons:       []string{"Yes", "No"},
-		DefaultButton: "No",
-		CancelButton:  "No",
-	})
+	result := make(chan bool, 1)
 
-	if err != nil {
-		return false
-	}
+	yes := &application.Button{Label: "Yes"}
+	yes.OnClick(func() { result <- true })
 
-	return selection == "Yes"
+	no := &application.Button{Label: "No", IsDefault: true, IsCancel: true}
+	no.OnClick(func() { result <- false })
+
+	b.app.Dialog.Question().
+		SetTitle("Do you really want to delete?").
+		SetMessage("Confirm").
+		AddButtons([]*application.Button{yes, no}).
+		SetDefaultButton(no).
+		SetCancelButton(no).
+		Show()
+
+	return <-result
 }
