@@ -4,5 +4,19 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/.jj": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"bin": true,
+			"frontend/node_modules": true,
+			"frontend/dist": true,
+			"frontend/bindings": true,
+			".task": true,
+		}
+	}
 }
