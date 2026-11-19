@@ -301,17 +301,20 @@ at the generated v3 bindings and runtime.
   - import `{ App }` from `../../bindings/progress`
   - `customConfirm` calls `App.ConfirmDelete()` instead of
     `window.go.main.App.ConfirmDelete()`
-  - export `isWails()` so `main.ts` shares the detection
-- Update `main.ts` and `framework.ts` Wails detection from `window.go` to
-  `!!window._wails?.flags`. Do not test bare `window._wails`: importing the
-  runtime creates that object in a plain browser too, which would disable the
-  sample-data fallback. `_wails.flags` is injected only by the Wails webview.
+- Do not detect Wails with a `window.go` / `window._wails` check. Call the
+  binding and treat a rejection as "plain browser" (`loadLocal()` → `null`,
+  `saveFile()` → ignore, `customConfirm()` → `window.confirm`). Two reasons:
+  importing `@wailsio/runtime` creates `window._wails` in a plain browser, and
+  v3 injects `_wails.flags` from the `didFinishNavigation` hook, which races
+  `window.onload`, where `run()` starts. A flag check silently took the browser
+  path inside the app and overwrote `data.json` with sample weeks.
 - Delete `frontend/wailsjs/**` and update the comment in `vite.config.mjs`.
 
 **Acceptance criteria:**
 - [x] `wails3 generate bindings` produces `frontend/bindings/progress/*`.
 - [x] `npm run build` succeeds in `frontend/` with the generated bindings present.
-- [ ] Opening the frontend in a plain browser still shows sample data.
+- [x] Opening the frontend in a plain browser still shows sample data (verified in
+      headless Chrome: container ids `1`, `2`, `3`, `101`, `102`, `103`, no UUIDs).
 - [x] No `window.go` or `wailsjs` references remain in source.
 
 **Verification:** `cd frontend && npm run build`; `wails3 dev`.
