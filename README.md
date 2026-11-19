@@ -20,25 +20,29 @@ Tools used :
 ### Instructions
 
 ```
-clone the repo
+git clone the repo
+cd progress-go
 
-go install github.com/wailsapp/wails/v2/cmd/wails@latest
-
-
-npm install
+mise install        # Go, Node, and wails3 3.1.0
 
 cd frontend
 npm install
-
-
-
+cd ..
 ```
 
-Build the app
+Run the app in development:
 
 ```
-wails build
+wails3 dev
 ```
+
+Build the macOS app bundle:
+
+```
+wails3 package
+```
+
+The bundle is written to `bin/progress.app`.
 
 ## Screenshot
 
