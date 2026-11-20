@@ -17,7 +17,7 @@
     "@types/canvas-confetti": "^1.9.0",
     "canvas-confetti": "^1.9.4",
     "dragula": "^3.7.3",
-    "lit-html": "^2.8.0",
+    "lit-html": "^3.3.3",
     "tailwindcss": "^4.3.5",
     "uuid": "^14.0.3",
     "vite": "^8.3.8"
