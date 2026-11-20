@@ -2,7 +2,6 @@ import { render } from "lit-html";
 import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
 import dragula from "dragula";
-import confetti from "canvas-confetti"
 import { saveFile } from "./framework";
 
 export class WeekManager {
@@ -96,17 +95,20 @@ export class WeekManager {
     let animationEnd = Date.now() + duration;
     let defaults = { startVelocity: 50, spread: 120, zIndex: 0 };
 
-    let interval = setInterval(function () {
-      let timeLeft = animationEnd - Date.now();
+    // Loaded on demand: confetti only matters once, when a week is completed.
+    import("canvas-confetti").then(({ default: confetti }) => {
+      let interval = setInterval(function () {
+        let timeLeft = animationEnd - Date.now();
 
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
 
-      let particleCount = 100 * (timeLeft / duration);
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
-    }, 250);
+        let particleCount = 100 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
+      }, 250);
+    });
   }
 
   registerDraggable() {
