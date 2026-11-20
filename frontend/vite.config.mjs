@@ -18,7 +18,7 @@ export default defineConfig({
     // ([::1]). The Wails dev proxy dials 127.0.0.1 and would get a 502, so pin
     // the dev server to IPv4.
     host: '127.0.0.1',
-    port: 1234,
+    port: 9245,
     strictPort: true,
     fs: {
       allow: [frontendDir],

@@ -3,8 +3,7 @@ version: '3'
 vars:
   APP_NAME: "progress"
   BIN_DIR: "bin"
-  PACKAGE_MANAGER: '{{.PACKAGE_MANAGER | default "npm"}}'
-  VITE_PORT: '{{.WAILS_VITE_PORT | default 1234}}'
+  VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
   # Target OS for build/package/run. Defaults to the host OS.
   GOOS: '{{.GOOS | default OS}}'
 
@@ -30,9 +29,3 @@ tasks:
     desc: Rebuilds and runs the development `.app` bundle.
     cmds:
       - task: "{{.GOOS}}:run"
-
-  dev:
-    summary: Runs the application in development mode
-    desc: Starts Vite on port 1234 and runs the app with live reload.
-    cmds:
-      - wails3 dev -config ./build/config.yml -port {{.VITE_PORT}}

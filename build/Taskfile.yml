@@ -1,20 +1,9 @@
 version: '3'
 
 tasks:
-  go:mod:tidy:
-    summary: Runs `go mod tidy`
-    internal: true
-    run: once
-    cmds:
-      - go mod tidy
-
   install:frontend:deps:
     summary: Install frontend dependencies
     run: once
-    cmds:
-      - task: install:frontend:deps:npm
-
-  install:frontend:deps:npm:
     dir: frontend
     sources:
       - package.json
@@ -28,7 +17,7 @@ tasks:
       - npm install
 
   build:frontend:
-    label: build:frontend (DEV={{.DEV}} RUNNER={{.PACKAGE_MANAGER}})
+    label: build:frontend (DEV={{.DEV}})
     summary: Build the frontend project
     run: once
     dir: frontend
@@ -53,26 +42,14 @@ tasks:
       PRODUCTION: '{{if eq .DEV "true"}}false{{else}}true{{end}}'
 
   frontend:run:
-    summary: Run a frontend script with the selected runner
-    cmds:
-      - task: frontend:run:{{.PACKAGE_MANAGER}}
-        vars:
-          SCRIPT: "{{.SCRIPT}}"
-    vars:
-      SCRIPT: "{{.SCRIPT}}"
-
-  frontend:run:npm:
+    summary: Run a frontend script
     dir: frontend
     cmds:
       - npm run {{.SCRIPT}} -q
-    vars:
-      SCRIPT: "{{.SCRIPT}}"
 
   generate:bindings:
     summary: Generates bindings for the frontend
     run: once
-    deps:
-      - task: go:mod:tidy
     sources:
       - "**/*.[jt]s"
       - exclude: frontend/**/*
@@ -116,10 +93,6 @@ tasks:
     summary: Runs the frontend in development mode
     deps:
       - task: install:frontend:deps
-    cmds:
-      - task: frontend:dev:{{.PACKAGE_MANAGER}}
-
-  frontend:dev:npm:
     dir: frontend
     cmds:
       - npm run dev -- --port {{.VITE_PORT}} --strictPort
