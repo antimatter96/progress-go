@@ -496,7 +496,7 @@ export function templateFunc(week: Week) {
     videos.push(html`
     <div class="video px-0 ${classMap(firstVideoMargin)}">
       <p class="video-text ${classMap(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <input type="checkbox" ? .checked=${video.seen} class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}"></button>
+      <input type="checkbox" ?checked=${video.seen} class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}"></button>
     </div>
   `);
   });
