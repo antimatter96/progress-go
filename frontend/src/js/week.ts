@@ -402,7 +402,7 @@ export class Week {
     this.videos.forEach((_video, i) => {
       let btn = document.getElementById(`${this.id}-video-${i}`);
 
-      btn.addEventListener('click', (e: PointerEvent) => {
+      btn.addEventListener('click', (e: Event) => {
         if (this.locked) {
           e.preventDefault();
           this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
