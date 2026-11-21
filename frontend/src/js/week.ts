@@ -657,7 +657,7 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${week.hidden} class="pt-2 px-5 mx-auto justify-between">
         <div class="w-full border-b-2 border-gray-600">
           <h2 class="text-xl font-bold mb-2 text-black">
             Videos
@@ -669,7 +669,7 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-2 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-2 px-5 mx-auto justify-between">
         <div class="w-full ${classMap(solvableContainerBorderBottom)}">
           <h2 class="text-xl font-bold mb-2 text-black">
             ${solvableHeading}
@@ -681,7 +681,7 @@ export function templateFunc(week: Week) {
         </div>
       </div>
 
-      <div ?hidden=${programmables.length == 0 || week.hidden} class="pt-2 pb-3 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${programmables.length == 0 || week.hidden} class="pt-2 pb-3 px-5 mx-auto justify-between">
         <div class="w-full">
           <h2 class="text-xl font-bold mb-2 text-black">
             Programming
