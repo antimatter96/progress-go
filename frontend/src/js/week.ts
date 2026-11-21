@@ -486,17 +486,12 @@ export function templateFunc(week: Week) {
   let videos = <any>[];
   week.videos.forEach((video, i) => {
     const firstVideoMargin = { 'mb-4': i == 0 && week.videos.length > max_in_row };
-    const btnClass = {
-      'btn-checked': video.seen,
-      'btn-unchecked': !video.seen
-    };
-
     const inProgress = { 'in-progress': !video.seen, 'done': video.seen }
 
     videos.push(html`
     <div class="video px-0 ${classMap(firstVideoMargin)}">
       <p class="video-text ${classMap(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <input type="checkbox" ?checked=${video.seen} class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}">
+      <input type="checkbox" ?checked=${video.seen} class="video-btn" id="${id}-video-${i}">
     </div>
   `);
   });
