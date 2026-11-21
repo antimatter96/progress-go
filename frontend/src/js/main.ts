@@ -1,9 +1,10 @@
+import { render } from 'lit-html';
+
 import { AlertHandler } from "./alerts";
 import { FormHandler, formTemplate } from "./form";
 import { Week } from "./week";
 import { WeekManager } from "./week_manager";
 import { loadLocal } from "./framework";
-import { render } from 'lit-html';
 
 
 var displaceHeader = (function () {

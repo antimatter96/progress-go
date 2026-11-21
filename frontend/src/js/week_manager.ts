@@ -1,7 +1,8 @@
+import dragula from "dragula";
 import { render } from "lit-html";
+
 import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
-import dragula from "dragula";
 import { saveFile } from "./framework";
 
 export class WeekManager {
