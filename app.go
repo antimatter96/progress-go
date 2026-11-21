@@ -45,11 +45,11 @@ func (b *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 				return err
 			}
 
-			err = os.WriteFile(savedFileLocation, []byte("{}"), 0666)
+			err = os.WriteFile(savedFileLocation, []byte("[]"), 0666)
 			if err != nil {
 				return err
 			}
-			data = []byte("{}")
+			data = []byte("[]")
 		} else {
 			return err
 		}
