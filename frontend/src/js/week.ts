@@ -141,6 +141,11 @@ export class Week {
   }
 
   flipVideo(i: number): void {
+    if (this.locked) {
+      this.alertUser('error', "Please unlock before making any changes");
+      return
+    }
+
     if (this.videos[i].seen) {
       this.markVideoLeft(i);
     } else {
@@ -149,10 +154,6 @@ export class Week {
   }
 
   markVideoSeen(i): void {
-    if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
-      return;
-    }
     if (this.videos[i].seen) {
       this.alertUser('error', "Already done");
       return;
@@ -161,10 +162,6 @@ export class Week {
     this.updateLastChangeTime(true);
   }
   markVideoLeft(i): void {
-    if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
-      return;
-    }
     if (!this.videos[i].seen) {
       this.alertUser('error', "Already done");
       return;
@@ -403,7 +400,13 @@ export class Week {
     this.videos.forEach((_video, i) => {
       let btn = document.getElementById(`${this.id}-video-${i}`);
 
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e: PointerEvent) => {
+        if (this.locked) {
+          e.preventDefault();
+          this.alertUser('error', "Please unlock before making any changes");
+          return
+        }
+
         this.flipVideo(i);
       });
     });
@@ -491,7 +494,7 @@ export function templateFunc(week: Week) {
     videos.push(html`
     <div class="video px-0 ${classMap(firstVideoMargin)}">
       <p class="video-text ${classMap(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <input type="checkbox" ?checked=${video.seen} class="video-btn" id="${id}-video-${i}">
+      <input type="checkbox" ?checked=${video.seen} class="video-btn" id="${id}-video-${i}" ?disabled=${week.locked}>
     </div>
   `);
   });
