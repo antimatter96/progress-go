@@ -31,6 +31,8 @@ const progress_bg = [
   "bg-lime-500",
 ]
 
+const ERROR_CHANGE_NOT_ALLOWED = "Please unlock before making any changes"
+
 export class Week {
   id = 'uuid'
   name = "Sample Week 1";
@@ -142,7 +144,7 @@ export class Week {
 
   flipVideo(i: number): void {
     if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
+      this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
       return
     }
 
@@ -172,7 +174,7 @@ export class Week {
 
   markSolvableDone(type): void {
     if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
+      this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
       return;
     }
     if (this.solvable[type].left <= 0) {
@@ -184,7 +186,7 @@ export class Week {
   }
   markSolvableNotDone(type): void {
     if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
+      this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
       return;
     }
     if (this.solvable[type].left + 1 > this.solvable[type].total) {
@@ -197,7 +199,7 @@ export class Week {
 
   markProgrammableDone(type): void {
     if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
+      this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
       return;
     }
     if (this.programmable[type].left <= 0) {
@@ -209,7 +211,7 @@ export class Week {
   }
   markProgrammableNotDone(type): void {
     if (this.locked) {
-      this.alertUser('error', "Please unlock before making any changes");
+      this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
       return;
     }
     if (this.programmable[type].left + 1 > this.programmable[type].total) {
@@ -383,7 +385,7 @@ export class Week {
       clearTimeout(this.hideMenuTimer);
       this.menuVisible = !this.menuVisible;
       if (this.locked) {
-        this.alertUser('error', "Please unlock before making any changes");
+        this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
         return;
       }
 
@@ -403,7 +405,7 @@ export class Week {
       btn.addEventListener('click', (e: PointerEvent) => {
         if (this.locked) {
           e.preventDefault();
-          this.alertUser('error', "Please unlock before making any changes");
+          this.alertUser('error', ERROR_CHANGE_NOT_ALLOWED);
           return
         }
 
