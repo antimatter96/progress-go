@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
-	"syscall"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -39,7 +39,7 @@ func (b *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 	data, err := os.ReadFile(savedFileLocation)
 
 	if err != nil {
-		if errors.Is(err, syscall.ENOENT) {
+		if errors.Is(err, fs.ErrNotExist) {
 			err = os.MkdirAll(filepath.Dir(savedFileLocation), 0755)
 			if err != nil {
 				return err
