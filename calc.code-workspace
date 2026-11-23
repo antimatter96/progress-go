@@ -17,6 +17,8 @@
 			"frontend/dist": true,
 			"frontend/bindings": true,
 			".task": true,
-		}
+		},
+		"editor.formatOnSave": false,
+		"window.zoomLevel": 0.7
 	}
 }
