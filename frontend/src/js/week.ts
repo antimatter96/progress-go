@@ -2,15 +2,8 @@ import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map.js';
 
 import { customConfirm } from './framework';
+import { newId } from './utils';
 
-// crypto.randomUUID requires a secure context. Fail loudly instead of
-// silently degrading to a weaker id source.
-function newId(): string {
-  if (typeof crypto === 'undefined' || typeof crypto.randomUUID !== 'function') {
-    throw new Error('Insecure context: crypto.randomUUID is unavailable');
-  }
-  return crypto.randomUUID();
-}
 
 const progress = [
   "text-red-500",
